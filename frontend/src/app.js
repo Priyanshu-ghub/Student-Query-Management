@@ -1,19 +1,20 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavbarComponent from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
-import PrivateRoute from './components/PrivateRoute';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <BrowserRouter>
+      <NavbarComponent />
+      <div className="container mt-4">
         <Routes>
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </div>
+    </BrowserRouter>
   );
 }
 

@@ -1,41 +1,43 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { Form, Button } from 'react-bootstrap';
 
 export default function QueryForm() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [query, setQuery] = useState({
+    title: '',
+    description: '',
+    category: 'academic'
+  });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await axios.post('/api/queries', { title, description });
-    setTitle('');
-    setDescription('');
+    // Will connect to backend later
+    console.log('Query submitted:', query);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3">
+        <Form.Label>Title</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={query.title}
+          onChange={(e) => setQuery({...query, title: e.target.value})}
         />
-      </div>
-      <div className="mb-3">
-        <textarea
-          className="form-control"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
+      </Form.Group>
+      
+      <Form.Group className="mb-3">
+        <Form.Label>Description</Form.Label>
+        <Form.Control 
+          as="textarea" 
+          rows={3} 
+          value={query.description}
+          onChange={(e) => setQuery({...query, description: e.target.value})}
         />
-      </div>
-      <button type="submit" className="btn btn-primary">
+      </Form.Group>
+      
+      <Button variant="primary" type="submit">
         Submit Query
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 }
